@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/loginTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Log In"
+        android:textSize="24sp"
+        android:textColor="@android:color/black"
+        android:gravity="center"
+        android:layout_marginBottom="24dp" />
+
+    <!-- Username EditText -->
+    <EditText
+        android:id="@+id/usernameEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Username"
+        android:minHeight="48dp"
+        android:inputType="text" />
+
+    <!-- Password EditText -->
+    <EditText
+        android:id="@+id/passwordEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Password"
+        android:minHeight="48dp"
+        android:inputType="textPassword"
+        android:layout_marginTop="16dp"/>
+
+    <!-- Login Button -->
+    <Button
+        android:id="@+id/loginButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:layout_marginTop="16dp"/>
+
+    <!-- Forgot Password Link -->
+    <TextView
+        android:id="@+id/forgotPasswordTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Forgot Password?"
+        android:minHeight="48dp"
+        android:textColor="@android:color/holo_blue_light"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:clickable="true"
+        android:focusable="true"/>
+
+    <!-- Register Account Link -->
+    <TextView
+        android:id="@+id/registerAccountTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Don't have an account? Register"
+        android:textColor="@android:color/holo_blue_light"
+        android:layout_marginTop="8dp"
+        android:minHeight="48dp"
+        android:gravity="center"
+        android:clickable="true"
+        android:focusable="true"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="16dp">
+
+    <!-- Google Login Icon -->
+    <ImageView
+        android:id="@+id/googleLoginIcon"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/google_icon"
+        android:layout_marginTop="8dp"
+        android:contentDescription="Google Login"
+        android:scaleType="centerInside"/>
+
+    <!-- Facebook Login Icon -->
+    <ImageView
+        android:id="@+id/facebookLoginIcon"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/facebook_icon"
+        android:layout_marginTop="8dp"
+        android:contentDescription="Facebook Login"
+        android:scaleType="centerInside"/>
+
+    <!-- Apple Login Icon -->
+    <ImageView
+        android:id="@+id/appleLoginIcon"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/apple_icon"
+        android:layout_marginTop="8dp"
+        android:contentDescription="Apple Login"
+        android:scaleType="centerInside"/>
+    </LinearLayout>
+    <!-- Status TextView (for login success/error messages) -->
+    <TextView
+        android:id="@+id/loginStatusTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:layout_marginTop="16dp"
+        android:textColor="@android:color/holo_red_dark"/>
+</LinearLayout>
