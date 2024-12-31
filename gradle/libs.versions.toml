@@ -17,7 +17,6 @@ ksp="1.9.10-1.0.13"
 googlePlayServicesAuth = "20.6.0"
 googlePlayServicesBase = "18.0.1"
 facebookSdk = "12.3.0"
-appleAuth = "1.0.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -37,8 +36,6 @@ androidx-room-compiler = { group = "androidx.room", name = "room-compiler", vers
 com-google-android-gms-play-services-auth = { group = "com.google.android.gms", name = "play-services-auth", version.ref = "googlePlayServicesAuth" }
 com-google-android-gms-play-services-base = { group = "com.google.android.gms", name = "play-services-base", version.ref = "googlePlayServicesBase" }
 com-facebook-android-sdk = { group = "com.facebook.android", name = "facebook-android-sdk", version.ref = "facebookSdk" }
-com-apple-auth = { group = "com.apple.auth", name = "apple-auth", version.ref = "appleAuth" }
-
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

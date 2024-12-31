@@ -3,17 +3,23 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+
 class LoginActivity : AppCompatActivity() {
+
 
     private lateinit var usernameEditText: EditText
     private lateinit var passwordEditText: EditText
     private lateinit var loginButton: Button
+    private lateinit var googleLoginIcon: ImageView
+    private lateinit var facebookLoginIcon: ImageView
+    private lateinit var appleLoginIcon: ImageView
     private lateinit var loginStatusTextView: TextView
 
-    // SharedPreferences to store login state
     private val sharedPreferences: SharedPreferences by lazy {
         getSharedPreferences("user_prefs", MODE_PRIVATE)
     }
@@ -22,14 +28,36 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+
+
         usernameEditText = findViewById(R.id.usernameEditText)
         passwordEditText = findViewById(R.id.passwordEditText)
         loginButton = findViewById(R.id.loginButton)
+        googleLoginIcon = findViewById(R.id.googleLoginIcon)
+        facebookLoginIcon = findViewById(R.id.facebookLoginIcon)
+        appleLoginIcon = findViewById(R.id.appleLoginIcon)
         loginStatusTextView = findViewById(R.id.loginStatusTextView)
 
         // Check if user is already logged in
         checkIfLoggedIn()
+        // Handling the Google Login click (You can add the actual Google login logic here)
+        googleLoginIcon.setOnClickListener {
+            // Trigger Google Login
+            loginStatusTextView.text = "Google Login clicked"
+            // Add logic for Google login here
+        }
 
+        // Handling the Facebook Login click (You can add the actual Facebook login logic here)
+        facebookLoginIcon.setOnClickListener {
+            // Trigger Facebook Login
+            loginStatusTextView.text = "Facebook Login clicked"
+            // Add logic for Facebook login here
+        }
+
+        // Handling the Apple Login click
+        appleLoginIcon.setOnClickListener {
+            loginStatusTextView.text = "Facebook Login clicked"
+        }
         loginButton.setOnClickListener {
             val username = usernameEditText.text.toString()
             val password = passwordEditText.text.toString()
@@ -67,6 +95,8 @@ class LoginActivity : AppCompatActivity() {
             loginStatusTextView.text = "Invalid username or password."
         }
     }
+
+
 
     // Navigate to the Home screen after successful login
     private fun navigateToHome() {

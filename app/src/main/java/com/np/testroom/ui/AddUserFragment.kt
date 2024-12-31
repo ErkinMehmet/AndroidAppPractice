@@ -27,7 +27,7 @@ class AddUserFragment : Fragment() {
             val age = binding.editTextAge.text.toString().toIntOrNull()
 
             if (!TextUtils.isEmpty(name) && age != null) {
-                val user = User(name = name, age = age)
+                val user = User(name = name, age = age,username="e", passwordHash = "e")
                 userViewModel.addUser(user)
                 binding.editTextName.text.clear()
                 binding.editTextAge.text.clear()

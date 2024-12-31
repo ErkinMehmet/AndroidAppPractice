@@ -41,7 +41,6 @@ android {
 
 dependencies {
     implementation(libs.com.facebook.android.sdk)  // Facebook SDK
-    implementation(libs.com.apple.auth)
     implementation(libs.com.google.android.gms.play.services.auth)
     implementation(libs.com.google.android.gms.play.services.base)
     implementation(libs.androidx.room.runtime)
