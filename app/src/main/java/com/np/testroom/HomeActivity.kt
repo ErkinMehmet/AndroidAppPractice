@@ -12,6 +12,9 @@ import com.np.testroom.ui.SettingsFragment
 import com.np.testroom.ui.UserListFragment
 import androidx.room.Room
 import com.np.testroom.data.AppDatabase
+import com.np.testroom.ui.MonthlyPaymentsFragment
+import androidx.fragment.app.FragmentTransaction
+
 
 class HomeActivity : AppCompatActivity() {
 
@@ -29,9 +32,9 @@ class HomeActivity : AppCompatActivity() {
 
         binding.bottomNavigation.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
-                R.id.nav_list -> replaceFragment(UserListFragment())
-                R.id.nav_add -> replaceFragment(AddUserFragment())
-                R.id.nav_settings -> replaceFragment(SettingsFragment())
+                R.id.nav_list -> replaceFragment(CalculateLoanFragment())
+                R.id.nav_add -> replaceFragment(MonthlyPaymentsFragment())
+                R.id.nav_settings -> replaceFragment(AddUserFragment())
             }
             true
         }
@@ -57,8 +60,15 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun replaceFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, fragment)
-            .commit()
+        val transaction = supportFragmentManager.beginTransaction()
+
+        // Optionally, you can add a fragment transition animation
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+
+        // Replace the fragment container without losing the state
+        transaction.replace(R.id.fragment_container, fragment)
+        transaction.addToBackStack(null)  // Add to back stack to allow back navigation
+
+        transaction.commit()
     }
 }

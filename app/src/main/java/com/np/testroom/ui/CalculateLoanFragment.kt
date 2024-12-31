@@ -1,5 +1,6 @@
 package com.np.testroom.ui
 
+import androidx.lifecycle.ViewModel
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -15,10 +16,18 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.np.testroom.databinding.FragmentMonthlyPaymentsBinding
+import com.np.testroom.R
+import com.np.testroom.viewmodel.SharedViewModel
+import androidx.lifecycle.ViewModelProvider
+import android.util.Log
+import com.np.testroom.viewmodel.CalculateLoanViewModel
 
 class CalculateLoanFragment : Fragment() {
 
     private lateinit var binding: FragmentCalculateLoanBinding
+    private lateinit var sharedViewModel: SharedViewModel
+    private val calculateLoanViewModel: CalculateLoanViewModel by viewModels()
     //private val userViewModel: UserViewModel by viewModels()
 
 
@@ -33,12 +42,8 @@ class CalculateLoanFragment : Fragment() {
         val editTextPeriod = binding.editTextPeriod
         val editTextName = binding.editTextName
 
+
         editTextName.setText("Test")
-        // Set up RecyclerView
-        val recyclerView = binding.recyclerView
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        val adapter = LoanBalanceAdapter() // We'll create this adapter later
-        recyclerView.adapter = adapter
 
         // Loan EditText (Prefix "$")
         editTextLoan.addTextChangedListener(object : TextWatcher {
@@ -65,6 +70,7 @@ class CalculateLoanFragment : Fragment() {
         })
 
 
+        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
 
         binding.btnCalculateLoan.setOnClickListener {
             // Get user input
@@ -136,11 +142,18 @@ class CalculateLoanFragment : Fragment() {
                 Extra Monthly Payment=$formattedExtraPayment
                 Total Months: $totalMonthsTaken
             """.trimIndent()
-            // Update RecyclerView with calculated loan balances
+
+            /*
+            val recyclerView = binding.recyclerView
+            recyclerView.layoutManager = LinearLayoutManager(context)
+            val adapter = LoanBalanceAdapter()
+            recyclerView.adapter = adapter
             adapter.submitList(balances)
-
+            Log.d("Balances", "Balances in Fragment 1: $balances")
+            */
+            sharedViewModel.setBalances(balances)
+            calculateLoanViewModel.test()
         }
-
         return binding.root
     }
 }

@@ -9,7 +9,7 @@ import com.np.testroom.data.UserRepository
 import com.np.testroom.data.AppDatabase
 import kotlinx.coroutines.launch
 
-class UserViewModel(application: Application) : AndroidViewModel(application) {
+class CalculateLoanViewModel(application: Application) : AndroidViewModel(application) {
 
     private val userRepository: UserRepository
     val userLiveData: MutableLiveData<User?> = MutableLiveData()
@@ -39,6 +39,9 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
             usersLiveData.postValue(users)
         }
     }
-
-
+    fun test(){
+        viewModelScope.launch {
+            val users = userRepository.getAllUsers()
+        }
+    }
 }
