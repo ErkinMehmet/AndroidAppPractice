@@ -22,8 +22,11 @@ data class Scenario(
     val loan: Double,
     @ColumnInfo(name = "interest_rate") val interestRate: Double,
     val period: Int, // For example: number of months
-    val term: String, // Loan term description (e.g., "30 years")
+    val term: Int,
     @ColumnInfo(name = "extra_monthly_payment") val extraMonthlyPayment: Double? = null,
     @ColumnInfo(name = "user_id") val userId: Long,
-    val category: ScenarioCategory? = null // Optional category for the loan scenario
+    val category: ScenarioCategory? = null,
+    @ColumnInfo(name = "start_date") val startDate: Long = System.currentTimeMillis(),
+    @ColumnInfo(name = "created_at") val createdAt: Long = System.currentTimeMillis(),
+    @ColumnInfo(name = "updated_at") val updatedAt: Long = System.currentTimeMillis()
 )

@@ -3,23 +3,15 @@ import androidx.lifecycle.Observer
 import android.util.Log
 
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import com.np.testroom.databinding.FragmentAddUserBinding
-import com.np.testroom.viewmodel.UserViewModel
-import com.np.testroom.data.User
-import com.np.testroom.databinding.FragmentCalculateLoanBinding
-import android.text.Editable
-import android.text.TextWatcher
-import android.widget.EditText
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.np.testroom.databinding.FragmentMonthlyPaymentsBinding
-import com.np.testroom.viewmodel.SharedViewModel
+import com.np.testroom.viewmodels.SharedViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.np.testroom.adaptors.LoanBalanceAdapter
 
 class MonthlyPaymentsFragment : Fragment() {
 
@@ -41,7 +33,10 @@ class MonthlyPaymentsFragment : Fragment() {
             Log.d("Balances", "Updated balances in Fragment 2: $balances")
             if (balances != null) {
                 // Assuming you already have a RecyclerView set up
-                adapter.submitList(balances) // Update the RecyclerView with the new balances
+                sharedViewModel.dateString.value?.let { date ->
+                    Log.d("Date", "Date associated with balances: $date")
+                    adapter.submitList(balances,date) // Update the RecyclerView with the new balances
+                }
             }
         })
 

@@ -1,4 +1,4 @@
-package com.np.testroom.dao
+package com.np.testroom.daos
 
 import androidx.room.Dao
 import androidx.room.Insert
@@ -16,4 +16,7 @@ interface UserDao {
 
     @Query("SELECT * FROM users")
     suspend fun getAllUsers(): List<User>
+
+    @Query("SELECT EXISTS(SELECT 1 FROM users WHERE id = :userId LIMIT 1)")
+    suspend fun userExists(userId: Long): Boolean
 }

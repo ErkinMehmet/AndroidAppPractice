@@ -4,16 +4,13 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.np.testroom.dao.*
-import com.np.testroom.data.User
-import com.np.testroom.data.Product
-import com.np.testroom.data.Scenario
+import com.np.testroom.daos.*
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.np.testroom.converters.Converters
 import androidx.room.TypeConverters
 
-@Database(entities = [User::class, Product::class, Scenario::class], version = 4, exportSchema = false)
+@Database(entities = [User::class, Product::class, Scenario::class], version = 5, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 
@@ -31,7 +28,7 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "app_database"
-                ).addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4) // Add the migration here
+                ).addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4,MIGRATION_4_5) // Add the migration here
                     .build()
                 INSTANCE = instance
                 instance
@@ -79,6 +76,16 @@ abstract class AppDatabase : RoomDatabase() {
                         FOREIGN KEY(`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE
                     )
                 """)
+            }
+        }
+
+        val MIGRATION_4_5 = object : Migration(4, 5) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                // Add new columns (term, start_date, created_at, updated_at)
+                database.execSQL("ALTER TABLE Scenario ADD COLUMN term INTEGER DEFAULT 0") // term as integer
+                database.execSQL("ALTER TABLE Scenario ADD COLUMN start_date INTEGER DEFAULT ${System.currentTimeMillis()}") // Add start_date
+                database.execSQL("ALTER TABLE Scenario ADD COLUMN created_at INTEGER DEFAULT ${System.currentTimeMillis()}") // Add created_at
+                database.execSQL("ALTER TABLE Scenario ADD COLUMN updated_at INTEGER DEFAULT ${System.currentTimeMillis()}") // Add updated_at
             }
         }
     }

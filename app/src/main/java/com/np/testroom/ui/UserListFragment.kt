@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.np.testroom.adaptors.UserAdapter
 import com.np.testroom.databinding.FragmentUserListBinding
-import com.np.testroom.viewmodel.UserViewModel
-import com.np.testroom.ui.UserAdapter
+import com.np.testroom.viewmodels.UserViewModel
 
 class UserListFragment : Fragment() {
 

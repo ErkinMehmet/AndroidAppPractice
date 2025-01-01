@@ -1,4 +1,4 @@
-package com.np.testroom.dao
+package com.np.testroom.daos
 
 import androidx.room.Dao
 import androidx.room.Insert

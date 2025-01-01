@@ -1,15 +1,15 @@
-package com.np.testroom.viewmodel
+package com.np.testroom.viewmodels
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.LiveData
 
 class SharedViewModel : ViewModel() {
     // Use a MutableLiveData or any other suitable type to hold your balances data
     val balances = MutableLiveData<List<String>>()
+    val dateString=MutableLiveData<String>()
 
-    fun setBalances(balancesList: List<String>) {
+    fun setBalances(balancesList: List<String>,date: String) {
         balances.value = balancesList
+        dateString.value=date
     }
 }

@@ -1,0 +1,51 @@
+<resources>
+    <!-- Style for the Table Header -->
+    <style name="TableHeaderStyle">
+        <item name="android:background">@color/beautiful_blue</item> <!-- Beautiful Blue Header -->
+        <item name="android:textColor">@color/white</item>  <!-- White text color for contrast -->
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>  <!-- Make text bold -->
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingEnd">16dp</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+    </style>
+
+
+    <style name="TableHeaderTextStyle">
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">16sp</item>  <!-- Adjust the text size -->
+        <item name="android:textColor">@color/white</item>  <!-- White text for contrast -->
+        <item name="android:paddingStart">8dp</item>
+        <item name="android:paddingEnd">8dp</item>
+        <item name="android:textStyle">bold</item>  <!-- Bold text for headers -->
+    </style>
+
+
+    <!-- Style for Table Data (Rows) -->
+    <style name="TableRowStyle">
+        <item name="android:background">@color/sky_blue</item>  <!-- Sky Blue for Row Background -->
+        <item name="android:textColor">@color/navy_blue</item>    <!-- Navy Blue Text -->
+        <item name="android:paddingStart">12dp</item>
+        <item name="android:paddingEnd">12dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+    </style>
+
+    <!-- Divider for Rows -->
+    <style name="TableRowDivider">
+        <item name="android:layout_marginTop">1dp</item>
+        <item name="android:layout_marginBottom">1dp</item>
+        <item name="android:background">@color/divider_blue</item> <!-- Light Blue Divider -->
+    </style>
+    <style name="RecyclerViewStyle">
+        <item name="android:divider">@android:color/darker_gray</item> <!-- Divider between items -->
+        <item name="android:dividerHeight">0.5dp</item> <!-- Height of the divider -->
+    </style>
+    <style name="TableRowTextStyle">
+        <item name="android:textSize">16sp</item> <!-- Set text size for better consistency -->
+        <item name="android:textColor">@color/navy_blue</item> <!-- Text color for the balance/date -->
+        <item name="android:gravity">center</item> <!-- Center-align text -->
+        <item name="android:paddingEnd">8dp</item> <!-- Right padding for text -->
+    </style>
+</resources>

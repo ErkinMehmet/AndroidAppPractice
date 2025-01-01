@@ -1,6 +1,6 @@
 // File: src/main/java/com/np/testroom/dao/ScenarioDao.kt
 
-package com.np.testroom.dao
+package com.np.testroom.daos
 
 import androidx.room.Dao
 import androidx.room.Insert
@@ -8,12 +8,14 @@ import androidx.room.Query
 import androidx.room.Update
 import androidx.room.Delete
 import com.np.testroom.data.Scenario
+import androidx.room.OnConflictStrategy
+import androidx.lifecycle.LiveData
 
 @Dao
 interface ScenarioDao {
 
-    @Insert
-    suspend fun insert(scenario: Scenario)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertScenario(scenario: Scenario)
 
     @Update
     suspend fun update(scenario: Scenario)
@@ -22,8 +24,11 @@ interface ScenarioDao {
     suspend fun delete(scenario: Scenario)
 
     @Query("SELECT * FROM scenarios WHERE user_id = :userId")
-    suspend fun getScenariosByUserId(userId: Long): List<Scenario>
+    fun getScenariosByUserId(userId: Long): LiveData<List<Scenario>>
 
     @Query("SELECT * FROM scenarios WHERE id = :id")
     suspend fun getScenarioById(id: Long): Scenario?
+
+    @Query("SELECT * FROM scenarios")
+    fun getAllScenarios(): LiveData<List<Scenario>>
 }

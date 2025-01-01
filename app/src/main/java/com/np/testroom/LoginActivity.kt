@@ -87,6 +87,7 @@ class LoginActivity : AppCompatActivity() {
             val editor = sharedPreferences.edit()
             editor.putBoolean("isLoggedIn", true)
             editor.putString("username", username)
+            editor.putInt("userId",1)
             editor.apply()
 
             // Navigate to the home screen or main activity

@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.np.testroom.databinding.FragmentAddUserBinding
-import com.np.testroom.viewmodel.UserViewModel
+import com.np.testroom.viewmodels.UserViewModel
 import com.np.testroom.data.User
 
 class AddUserFragment : Fragment() {

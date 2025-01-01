@@ -1,4 +1,4 @@
-package com.np.testroom.ui
+package com.np.testroom.adaptors
 import android.view.View
 import android.view.LayoutInflater
 import android.view.ViewGroup

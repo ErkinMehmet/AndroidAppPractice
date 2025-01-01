@@ -1,7 +1,5 @@
 package com.np.testroom.data
-import com.np.testroom.dao.UserDao
 import android.content.Context
-import com.np.testroom.data.AppDatabase
 
 class UserRepository(private val context: Context) {
     private val db = AppDatabase.getDatabase(context)

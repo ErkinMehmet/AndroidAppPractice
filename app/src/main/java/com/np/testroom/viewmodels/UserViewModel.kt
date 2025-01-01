@@ -1,4 +1,4 @@
-package com.np.testroom.viewmodel
+package com.np.testroom.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -6,10 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.np.testroom.data.User
 import com.np.testroom.data.UserRepository
-import com.np.testroom.data.AppDatabase
 import kotlinx.coroutines.launch
 
-class CalculateLoanViewModel(application: Application) : AndroidViewModel(application) {
+class UserViewModel(application: Application) : AndroidViewModel(application) {
 
     private val userRepository: UserRepository
     val userLiveData: MutableLiveData<User?> = MutableLiveData()
@@ -39,9 +38,6 @@ class CalculateLoanViewModel(application: Application) : AndroidViewModel(applic
             usersLiveData.postValue(users)
         }
     }
-    fun test(){
-        viewModelScope.launch {
-            val users = userRepository.getAllUsers()
-        }
-    }
+
+
 }

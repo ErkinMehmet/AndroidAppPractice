@@ -8,8 +8,7 @@ import com.np.testroom.databinding.ActivityHomeBinding
 import androidx.navigation.ui.AppBarConfiguration
 import com.np.testroom.ui.AddUserFragment
 import com.np.testroom.ui.CalculateLoanFragment
-import com.np.testroom.ui.SettingsFragment
-import com.np.testroom.ui.UserListFragment
+import com.np.testroom.ui.ScenariosFragment
 import androidx.room.Room
 import com.np.testroom.data.AppDatabase
 import com.np.testroom.ui.MonthlyPaymentsFragment
@@ -34,7 +33,7 @@ class HomeActivity : AppCompatActivity() {
             when (menuItem.itemId) {
                 R.id.nav_list -> replaceFragment(CalculateLoanFragment())
                 R.id.nav_add -> replaceFragment(MonthlyPaymentsFragment())
-                R.id.nav_settings -> replaceFragment(AddUserFragment())
+                R.id.nav_settings -> replaceFragment(ScenariosFragment())
             }
             true
         }

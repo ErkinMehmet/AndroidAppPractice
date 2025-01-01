@@ -1,49 +1,64 @@
 package com.np.testroom.ui
-
-import androidx.lifecycle.ViewModel
+import android.app.DatePickerDialog
 import android.os.Bundle
-import android.text.TextUtils
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import com.np.testroom.databinding.FragmentAddUserBinding
-import com.np.testroom.viewmodel.UserViewModel
-import com.np.testroom.data.User
-import com.np.testroom.databinding.FragmentCalculateLoanBinding
-import android.text.Editable
-import android.text.TextWatcher
+import android.widget.ArrayAdapter
 import android.widget.EditText
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.np.testroom.databinding.FragmentMonthlyPaymentsBinding
-import com.np.testroom.R
-import com.np.testroom.viewmodel.SharedViewModel
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.np.testroom.data.Scenario
+import com.np.testroom.databinding.FragmentCalculateLoanBinding
+import com.np.testroom.enums.ScenarioCategory
+import com.np.testroom.utils.commonFuncs
+import com.np.testroom.viewmodels.CalculateLoanViewModel
+import com.np.testroom.viewmodels.SharedViewModel
+import java.util.*
+import android.content.SharedPreferences
+import androidx.appcompat.app.AppCompatActivity.MODE_PRIVATE
 import android.util.Log
-import com.np.testroom.viewmodel.CalculateLoanViewModel
 
 class CalculateLoanFragment : Fragment() {
 
     private lateinit var binding: FragmentCalculateLoanBinding
     private lateinit var sharedViewModel: SharedViewModel
-    private val calculateLoanViewModel: CalculateLoanViewModel by viewModels()
-    //private val userViewModel: UserViewModel by viewModels()
-
+    private lateinit var editTextStartDate: EditText
+    private lateinit var calculateLoanViewModel: CalculateLoanViewModel
+    private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        sharedPreferences = requireContext().getSharedPreferences("user_prefs", MODE_PRIVATE)
         binding = FragmentCalculateLoanBinding.inflate(inflater, container, false)
+        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+        calculateLoanViewModel = ViewModelProvider(this).get(CalculateLoanViewModel::class.java)
         val editTextLoan = binding.editTextLoan
         val editTextExtraPayment = binding.editTextExtraPayment
         val editTextInterest = binding.editTextInterest
         val editTextPeriod = binding.editTextPeriod
         val editTextName = binding.editTextName
+        editTextStartDate = binding.editTextStartDate
+        val categorySpinner = binding.spinnerCategory
+        val editTextTerm=binding.editTextTerm
+        val categories = ScenarioCategory.values().map { it.name }
+        val spinnerAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, categories)
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        categorySpinner.adapter = spinnerAdapter
 
+        editTextName.setText("Test Scenario")
 
-        editTextName.setText("Test")
+        // Set up DatePickerDialog when the user clicks the EditText
+        setTodayDate()
+        editTextStartDate.setOnClickListener {
+            showDatePickerDialog()
+        }
+
 
         // Loan EditText (Prefix "$")
         editTextLoan.addTextChangedListener(object : TextWatcher {
@@ -70,7 +85,6 @@ class CalculateLoanFragment : Fragment() {
         })
 
 
-        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
 
         binding.btnCalculateLoan.setOnClickListener {
             // Get user input
@@ -78,7 +92,10 @@ class CalculateLoanFragment : Fragment() {
             val interestRate = editTextInterest.text.toString().replace("%", "").toDoubleOrNull() ?: 0.0
             val period = editTextPeriod.text.toString().toIntOrNull() ?: 0
             val extraPayment = editTextExtraPayment.text.toString().replace("$", "").toDoubleOrNull() ?: 0.0
-
+            val dateString = editTextStartDate.text.toString()
+            val title=editTextName.text.toString()
+            val term = editTextTerm.text.toString().toIntOrNull() ?: 0
+            val category = ScenarioCategory.valueOf(categorySpinner.selectedItem.toString())
 
             if (loanAmount <= 0 || extraPayment < 0 || interestRate <= 0 || period <= 0) {
                 // Handle invalid input (you can show a Toast or error message)
@@ -114,7 +131,7 @@ class CalculateLoanFragment : Fragment() {
                 remainingBalance = remainingBalance + monthlyInterest - monthlyPayment - extraPayment
 
 
-                if (remainingBalance < 0) {
+                if (remainingBalance <= 0) {
                     remainingBalance = 0.0
                     if (monthsTaken==0){
                         monthsTaken=month
@@ -122,16 +139,16 @@ class CalculateLoanFragment : Fragment() {
                 }
 
                 // Add the monthly balance to the list
-                balances.add("Month $month: $${"%.2f".format(remainingBalance)}")
+                balances.add("$${"%.2f".format(remainingBalance)}")
             }
-
+            monthsTaken=if (monthsTaken>0) {monthsTaken} else {totalMonths}
             val formattedLoanAmount = "$${"%.2f".format(loanAmount)}"
             val formattedInterestRate = "${"%.2f".format(interestRate)}%"
             val formattedPeriod = "$period years"
             val formattedMonthlyPayment = "$${"%.2f".format(monthlyPayment)}"
             val formattedMonthlyPayment_yearcompounding= "$${"%.2f".format(monthlyPayment_yearcompounding)}"
             val formattedExtraPayment = "$${"%.2f".format(extraPayment)}"
-            val totalMonthsTaken = monthsTaken
+            val totalMonthsTaken = commonFuncs.convertMonthsToYearsMonths(monthsTaken)
             // imprimer les informations de base
             binding.textViewMonthlyPayment.text = """
                 Loan Amount: $formattedLoanAmount
@@ -143,17 +160,54 @@ class CalculateLoanFragment : Fragment() {
                 Total Months: $totalMonthsTaken
             """.trimIndent()
 
-            /*
-            val recyclerView = binding.recyclerView
-            recyclerView.layoutManager = LinearLayoutManager(context)
-            val adapter = LoanBalanceAdapter()
-            recyclerView.adapter = adapter
-            adapter.submitList(balances)
-            Log.d("Balances", "Balances in Fragment 1: $balances")
-            */
-            sharedViewModel.setBalances(balances)
-            calculateLoanViewModel.test()
+            val newScenario=Scenario(
+                title = title,
+                loan = loanAmount,
+                interestRate = interestRate,
+                period = period,
+                term = term,
+                extraMonthlyPayment = extraPayment,
+                userId = sharedPreferences.getInt("userId", 1).toLong(),
+                category = category,
+                startDate = commonFuncs.parseDateToMillis(dateString)
+            )
+            Log.d("NewScenario", "New Scenario: $newScenario")
+            calculateLoanViewModel.addScenario(newScenario)
+
+            sharedViewModel.setBalances(balances,dateString)
+            Toast.makeText(requireContext(), "Balances updated!", Toast.LENGTH_SHORT).show()
         }
         return binding.root
     }
+
+    private fun showDatePickerDialog() {
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val datePickerDialog = DatePickerDialog(
+            requireContext(),
+            { _, selectedYear, selectedMonth, selectedDay ->
+                val formattedDate = commonFuncs.formatDate(selectedYear, selectedMonth, selectedDay)
+                editTextStartDate.setText(formattedDate)
+            },
+            year,
+            month,
+            day
+        )
+
+        datePickerDialog.show()
+    }
+    private fun setTodayDate() {
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH) // 0-indexed (January = 0)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        // Format today's date as yyyy-MM-dd and set it to the EditText
+        val formattedDate = commonFuncs.formatDate(year, month, day)
+        editTextStartDate.setText(formattedDate)
+    }
+
 }

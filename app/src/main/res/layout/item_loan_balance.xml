@@ -1,9 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/textViewBalance"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:text="Month 1: $0.00"
-    android:textSize="16sp"
-    android:padding="10dp"
-    android:gravity="center" />
+    android:orientation="horizontal"
+    style="@style/TableRowStyle"
+    android:background="@drawable/row_bg_selector"
+    android:paddingStart="12dp"
+    android:paddingEnd="12dp"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp">
+
+    <!-- Column 1: ID -->
+    <TextView
+        android:id="@+id/textViewDate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="1"
+        style="@style/TableRowTextStyle"/>
+
+    <!-- Column 2: Balance -->
+    <TextView
+        android:id="@+id/textViewBalance"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:text="$0.00"
+        style="@style/TableRowTextStyle"/>
+
+</LinearLayout>

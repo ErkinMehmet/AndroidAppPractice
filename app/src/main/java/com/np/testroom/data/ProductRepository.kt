@@ -1,7 +1,6 @@
 package com.np.testroom.data
 
-import com.np.testroom.dao.ProductDao
-import com.np.testroom.data.Product
+import com.np.testroom.daos.ProductDao
 
 class ProductRepository(private val productDao: ProductDao) {
 
