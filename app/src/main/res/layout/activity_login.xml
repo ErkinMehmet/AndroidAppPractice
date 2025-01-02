@@ -9,7 +9,7 @@
         android:id="@+id/loginTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Log In"
+        android:text="Connexion"
         android:textSize="24sp"
         android:textColor="@android:color/black"
         android:gravity="center"
@@ -20,7 +20,7 @@
         android:id="@+id/usernameEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Username"
+        android:hint="Nom d'utilisateur"
         android:minHeight="48dp"
         android:inputType="text" />
 
@@ -29,7 +29,7 @@
         android:id="@+id/passwordEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Password"
+        android:hint="Mot de passe"
         android:minHeight="48dp"
         android:inputType="textPassword"
         android:layout_marginTop="16dp"/>
@@ -39,7 +39,7 @@
         android:id="@+id/loginButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Login"
+        android:text="Se connecter"
         android:layout_marginTop="16dp"/>
 
     <!-- Forgot Password Link -->
@@ -47,7 +47,7 @@
         android:id="@+id/forgotPasswordTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Forgot Password?"
+        android:text="Mot de passe oublié?"
         android:minHeight="48dp"
         android:textColor="@android:color/holo_blue_light"
         android:layout_marginTop="8dp"
@@ -60,13 +60,14 @@
         android:id="@+id/registerAccountTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Don't have an account? Register"
+        android:text="Pas de compte? Inscription"
         android:textColor="@android:color/holo_blue_light"
         android:layout_marginTop="8dp"
         android:minHeight="48dp"
         android:gravity="center"
         android:clickable="true"
-        android:focusable="true"/>
+        android:focusable="true"
+        android:onClick="navigateToRegistrationPage"/>
 
     <LinearLayout
         android:layout_width="match_parent"

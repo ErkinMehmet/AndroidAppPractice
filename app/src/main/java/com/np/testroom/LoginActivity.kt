@@ -8,6 +8,13 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import android.view.View
+import com.np.testroom.data.UserRepository
+import com.np.testroom.utils.commonFuncs
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import android.util.Log
 
 class LoginActivity : AppCompatActivity() {
 
@@ -19,6 +26,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var facebookLoginIcon: ImageView
     private lateinit var appleLoginIcon: ImageView
     private lateinit var loginStatusTextView: TextView
+    private lateinit var userRepository: UserRepository
 
     private val sharedPreferences: SharedPreferences by lazy {
         getSharedPreferences("user_prefs", MODE_PRIVATE)
@@ -27,9 +35,7 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-
-
-
+        userRepository = UserRepository(this)
         usernameEditText = findViewById(R.id.usernameEditText)
         passwordEditText = findViewById(R.id.passwordEditText)
         loginButton = findViewById(R.id.loginButton)
@@ -81,28 +87,33 @@ class LoginActivity : AppCompatActivity() {
 
     // Function to handle user login
     private fun loginUser(username: String, password: String) {
-        // You can replace this logic with real authentication (e.g., API or Firebase)
-        if (username == "user" && password == "password") {
-            // Save the login state in SharedPreferences
-            val editor = sharedPreferences.edit()
-            editor.putBoolean("isLoggedIn", true)
-            editor.putString("username", username)
-            editor.putInt("userId",1)
-            editor.apply()
 
-            // Navigate to the home screen or main activity
-            navigateToHome()
-        } else {
-            loginStatusTextView.text = "Invalid username or password."
+        CoroutineScope(Dispatchers.IO).launch {
+            val user = userRepository.getUserByUsername(username)
+            if (user != null && commonFuncs.checkPassword(password, user.passwordHash)) {
+                // Save the login state in SharedPreferences
+                val editor = sharedPreferences.edit()
+                editor.putBoolean("isLoggedIn", true)
+                editor.putString("username", username)
+                editor.putInt("userId",user.id.toInt())
+                editor.apply()
+
+                // Navigate to the home screen or main activity
+                navigateToHome()
+            } else {
+                loginStatusTextView.text = "Nom d'utilisateur ou mot de passe erroné."
+            }
+
         }
     }
 
-
-
-    // Navigate to the Home screen after successful login
     private fun navigateToHome() {
         val intent = Intent(this, HomeActivity::class.java)
         startActivity(intent)
-        finish() // Finish the login activity so the user can't navigate back
+        finish()
+    }
+    fun navigateToRegistrationPage(view: View) {
+        val intent = Intent(this, RegistrationActivity::class.java)
+        startActivity(intent)
     }
 }

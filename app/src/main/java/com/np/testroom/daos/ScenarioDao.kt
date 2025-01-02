@@ -31,4 +31,7 @@ interface ScenarioDao {
 
     @Query("SELECT * FROM scenarios")
     fun getAllScenarios(): LiveData<List<Scenario>>
+
+    @Query("DELETE FROM scenarios WHERE id = :scenarioId")
+    suspend fun deleteScenarioById(scenarioId: Long)
 }

@@ -2,13 +2,13 @@
     <item
         android:id="@+id/nav_list"
         android:icon="@drawable/ic_home"
-        android:title="Calculator" />
+        android:title="Calcul" />
     <item
         android:id="@+id/nav_add"
         android:icon="@drawable/ic_profile"
-        android:title="Payments" />
+        android:title="Paiements" />
     <item
         android:id="@+id/nav_settings"
         android:icon="@drawable/ic_settings"
-        android:title="Scenarios" />
+        android:title="Scénarios" />
 </menu>

@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.np.testroom.databinding.FragmentMonthlyPaymentsBinding
 import com.np.testroom.viewmodels.SharedViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.np.testroom.adaptors.LoanBalanceAdapter
+import com.np.testroom.adaptors.BalanceAdapter
 
 class MonthlyPaymentsFragment : Fragment() {
 
@@ -26,7 +26,7 @@ class MonthlyPaymentsFragment : Fragment() {
         binding = FragmentMonthlyPaymentsBinding.inflate(inflater, container, false)
         sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         val recyclerView = binding.recyclerView
-        val adapter = LoanBalanceAdapter() // Assuming you have this adapter
+        val adapter = BalanceAdapter() // Assuming you have this adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = adapter
         sharedViewModel.balances.observe(viewLifecycleOwner, Observer { balances ->

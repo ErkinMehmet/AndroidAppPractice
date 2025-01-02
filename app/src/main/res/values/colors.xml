@@ -13,7 +13,7 @@
     <color name="blue_200">#90CAF9</color>
     <color name="light_blue_200">#81D4FA</color>
     <color name="light_blue_300">#64B5F6</color>
-
+    <color name="blue_fluorescent">#00BFFF</color>
     <color name="gray_800">#424242</color>
     <color name="light_blue">#ADD8E6</color>  <!-- Light Blue -->
     <color name="medium_blue">#4682B4</color> <!-- Steel Blue -->

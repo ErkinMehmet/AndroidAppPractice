@@ -1,16 +1,9 @@
 package com.np.testroom.data
-
+import android.content.Context
 import com.np.testroom.daos.ProductDao
 
-class ProductRepository(private val productDao: ProductDao) {
+class ProductRepository(private val context: Context) {
+    private val db = AppDatabase.getDatabase(context)
 
-    // Insert a product into the database
-    suspend fun insertProduct(product: Product) {
-        productDao.insert(product)
-    }
 
-    // Get all products from the database
-    suspend fun getAllProducts(): List<Product> {
-        return productDao.getAllProducts()
-    }
 }

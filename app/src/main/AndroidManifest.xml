@@ -15,12 +15,16 @@
         <activity android:name=".LoginActivity"
             android:exported="true"
             android:theme="@style/Theme.TestRoom.NoActionBar">
-            <!-- This is your login activity -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".RegistrationActivity"
+            android:exported="true"
+            android:theme="@style/Theme.TestRoom.NoActionBar"
+            />
+
 
         <activity android:name=".HomeActivity" android:launchMode="singleTop">
             <!-- This is your home activity after successful login -->

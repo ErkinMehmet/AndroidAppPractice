@@ -28,6 +28,19 @@ class CalculateLoanViewModel(application: Application) : AndroidViewModel(applic
     suspend fun getScenarioById(id: Int): Scenario? {
         return repository.getScenarioById(id.toLong())
     }
+    fun deleteScenario(scenarioId: Long) {
+        viewModelScope.launch {
+            repository.deleteScenario(scenarioId)
+        }
+    }
 
+    fun updateScenario(scenario: Scenario?) {
+        if (scenario == null) {
+            throw IllegalArgumentException("Scénario ne peut pas être nul.")
+        }
+        viewModelScope.launch {
+            repository.updateScenario(scenario)
+        }
+    }
 
 }

@@ -13,7 +13,7 @@ import androidx.room.Room
 import com.np.testroom.data.AppDatabase
 import com.np.testroom.ui.MonthlyPaymentsFragment
 import androidx.fragment.app.FragmentTransaction
-
+import android.content.Context
 
 class HomeActivity : AppCompatActivity() {
 
@@ -60,14 +60,9 @@ class HomeActivity : AppCompatActivity() {
 
     private fun replaceFragment(fragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()
-
-        // Optionally, you can add a fragment transition animation
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-
-        // Replace the fragment container without losing the state
         transaction.replace(R.id.fragment_container, fragment)
-        transaction.addToBackStack(null)  // Add to back stack to allow back navigation
-
+        transaction.addToBackStack(null)
         transaction.commit()
     }
 }

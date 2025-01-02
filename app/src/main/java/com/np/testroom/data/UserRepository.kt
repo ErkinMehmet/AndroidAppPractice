@@ -14,4 +14,7 @@ class UserRepository(private val context: Context) {
     suspend fun getAllUsers(): List<User> {
         return db.userDao().getAllUsers()
     }
+    suspend fun getUserByUsername(username: String): User? {
+        return db.userDao().getUserByUsername(username)
+    }
 }

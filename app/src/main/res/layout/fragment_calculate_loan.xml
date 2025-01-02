@@ -4,37 +4,23 @@
     android:layout_height="match_parent"
     android:padding="30dp">
 
-    <TextView
-        android:id="@+id/textViewScenario"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="New Loan Scenario"
-        android:textSize="24sp"
-        android:minHeight="48dp"
-        android:layout_marginBottom="20dp"
-        android:gravity="center"
-        android:layout_gravity="center"
-        android:layout_weight="1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+
     <EditText
         android:id="@+id/editTextName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Enter name"
+        android:hint="Saisir le titre du scénario"
         android:inputType="text"
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textViewScenario" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/editTextLoan"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Enter loan"
+        android:hint="Montant initial du prêt"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -45,7 +31,7 @@
         android:id="@+id/editTextInterest"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Enter interest rate (%)"
+        android:hint="Taux d'intérêt (%)"
         android:inputType="numberDecimal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -56,7 +42,7 @@
         android:id="@+id/editTextPeriod"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Enter period"
+        android:hint="Période d'amortissement"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -67,7 +53,7 @@
         android:id="@+id/editTextExtraPayment"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Enter extra monthly payment you want to make"
+        android:hint="Montant supplémentaire à payer par mois"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -78,7 +64,7 @@
         android:id="@+id/editTextStartDate"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Select start date"
+        android:hint="Date de début"
         android:inputType="none"
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -90,6 +76,7 @@
     <Spinner
         android:id="@+id/spinnerCategory"
         android:layout_width="0dp"
+        android:minHeight="48dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         app:layout_constraintTop_toBottomOf="@id/editTextStartDate"
@@ -101,7 +88,7 @@
         android:id="@+id/editTextTerm"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Enter term (optional)"
+        android:hint="Terme du prêt (faculdatif)"
         android:inputType="number"
         android:minHeight="48dp"
         app:layout_constraintTop_toBottomOf="@id/spinnerCategory"
@@ -112,15 +99,31 @@
         android:id="@+id/btnCalculateLoan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Calculate for Scenario"
+        android:text="Calculer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/editTextTerm" />
+    <Button
+        android:id="@+id/btnSauvegarder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sauvegarder"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editTextTerm" />
+    <Button
+        android:id="@+id/btnRetourner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Retourner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnSauvegarder" />
     <TextView
         android:id="@+id/textViewMonthlyPayment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Monthly Payment: $0.00"
+        android:text="Le résultat sera affiché ici."
         android:textSize="18sp"
         android:minHeight="48dp"
         android:layout_marginTop="20dp"

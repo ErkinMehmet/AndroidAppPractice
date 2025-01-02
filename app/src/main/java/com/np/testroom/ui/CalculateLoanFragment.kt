@@ -8,6 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.EditText
+import android.view.MenuItem
+import android.widget.Button
+import com.np.testroom.R
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -21,6 +24,11 @@ import java.util.*
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity.MODE_PRIVATE
 import android.util.Log
+import android.text.Html
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import android.view.animation.AnimationUtils
+import android.view.animation.Animation
+import android.widget.ImageView
 
 class CalculateLoanFragment : Fragment() {
 
@@ -50,17 +58,17 @@ class CalculateLoanFragment : Fragment() {
         val spinnerAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, categories)
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         categorySpinner.adapter = spinnerAdapter
-
         editTextName.setText("Test Scenario")
-
-        // Set up DatePickerDialog when the user clicks the EditText
+        var buttonSupprimer:Button=binding.btnSauvegarder
+        var buttonRetourner:Button=binding.btnRetourner
+        buttonSupprimer.visibility=View.GONE
+        buttonRetourner.visibility=View.GONE
         setTodayDate()
         editTextStartDate.setOnClickListener {
             showDatePickerDialog()
         }
 
 
-        // Loan EditText (Prefix "$")
         editTextLoan.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(charSequence: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(charSequence: CharSequence?, start: Int, before: Int, count: Int) {
@@ -72,7 +80,6 @@ class CalculateLoanFragment : Fragment() {
             override fun afterTextChanged(editable: Editable?) {}
         })
 
-        // Extra Payment EditText (Prefix "$")
         editTextExtraPayment.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(charSequence: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(charSequence: CharSequence?, start: Int, before: Int, count: Int) {
@@ -83,8 +90,6 @@ class CalculateLoanFragment : Fragment() {
             }
             override fun afterTextChanged(editable: Editable?) {}
         })
-
-
 
         binding.btnCalculateLoan.setOnClickListener {
             // Get user input
@@ -98,31 +103,18 @@ class CalculateLoanFragment : Fragment() {
             val category = ScenarioCategory.valueOf(categorySpinner.selectedItem.toString())
 
             if (loanAmount <= 0 || extraPayment < 0 || interestRate <= 0 || period <= 0) {
-                // Handle invalid input (you can show a Toast or error message)
-                //binding.resultTextView.text = "Invalid input, please check the fields."
                 return@setOnClickListener
             }
 
             val monthlyRate = interestRate / 100 / 12 // Monthly interest rate
-            val yearlyRate=interestRate / 100
             val totalMonths = period*12
 
-            // Calculate the monthly payment using amortization formula
             val monthlyPayment = if (monthlyRate > 0) {
                 loanAmount * (monthlyRate * Math.pow(1 + monthlyRate, totalMonths.toDouble())) /
                         (Math.pow(1 + monthlyRate, totalMonths.toDouble()) - 1)
             } else {
                 loanAmount / totalMonths
             }
-
-            val monthlyPayment_yearcompounding = if (yearlyRate > 0) {
-                loanAmount * (yearlyRate * Math.pow(1 + yearlyRate, period.toDouble())) /
-                        (Math.pow(1 + yearlyRate, period.toDouble()) - 1)/12
-            } else {
-                loanAmount / period
-            }
-
-            // List to hold the monthly balances
             val balances = mutableListOf<String>()
             var monthsTaken=0
             var remainingBalance = loanAmount
@@ -138,45 +130,47 @@ class CalculateLoanFragment : Fragment() {
                     }
                 }
 
-                // Add the monthly balance to the list
                 balances.add("$${"%.2f".format(remainingBalance)}")
             }
             monthsTaken=if (monthsTaken>0) {monthsTaken} else {totalMonths}
-            val formattedLoanAmount = "$${"%.2f".format(loanAmount)}"
+            val formattedLoanAmount = "$${"%.0f".format(loanAmount)}"
             val formattedInterestRate = "${"%.2f".format(interestRate)}%"
-            val formattedPeriod = "$period years"
-            val formattedMonthlyPayment = "$${"%.2f".format(monthlyPayment)}"
-            val formattedMonthlyPayment_yearcompounding= "$${"%.2f".format(monthlyPayment_yearcompounding)}"
-            val formattedExtraPayment = "$${"%.2f".format(extraPayment)}"
-            val totalMonthsTaken = commonFuncs.convertMonthsToYearsMonths(monthsTaken)
-            // imprimer les informations de base
-            binding.textViewMonthlyPayment.text = """
-                Loan Amount: $formattedLoanAmount
-                Interest Rate: $formattedInterestRate
-                Period: $formattedPeriod
-                Monthly Payment: $formattedMonthlyPayment
-                Yearly Compounding Monthly Payment=$formattedMonthlyPayment_yearcompounding
-                Extra Monthly Payment=$formattedExtraPayment
-                Total Months: $totalMonthsTaken
-            """.trimIndent()
-
+            val formattedMonthlyPayment = "$${"%.0f".format(monthlyPayment+extraPayment)}"
+            val startDateMillis=commonFuncs.parseDateToMillis(dateString)
+            val dateFin=commonFuncs.parseMillisToDate(commonFuncs.addMonthsToMillis(startDateMillis,monthsTaken),"yyyy-MM-dd")
+            binding.textViewMonthlyPayment.text = Html.fromHtml("""
+                <b>Montant initial:</b> $formattedLoanAmount<br>
+                <b>Taux d'intérêt:</b> $formattedInterestRate<br>
+                <b>Paiement mensuel:</b> $formattedMonthlyPayment<br>
+                <b>Jusqu'au:</b> $dateFin
+            """.trimIndent())
+            Log.d("Test",sharedPreferences.getInt("userId", 0).toString())
             val newScenario=Scenario(
                 title = title,
                 loan = loanAmount,
                 interestRate = interestRate,
                 period = period,
-                term = term,
+                term = term.toString(),
                 extraMonthlyPayment = extraPayment,
                 userId = sharedPreferences.getInt("userId", 1).toLong(),
                 category = category,
-                startDate = commonFuncs.parseDateToMillis(dateString)
+                startDate = startDateMillis
             )
-            Log.d("NewScenario", "New Scenario: $newScenario")
+            Log.d("NewScenario", "Nouveau scénario: $newScenario")
             calculateLoanViewModel.addScenario(newScenario)
 
             sharedViewModel.setBalances(balances,dateString)
-            Toast.makeText(requireContext(), "Balances updated!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Les paiements mis à jour!", Toast.LENGTH_SHORT).show()
+
+
+
         }
+        /*
+        val bottomNavigationView: BottomNavigationView? = activity?.findViewById(R.id.bottom_navigation)
+        val menuItem: MenuItem? = bottomNavigationView?.menu?.findItem(R.id.nav_add)
+        val menuItemIcon: ImageView? = menuItem?.actionView?.findViewById(android.R.id.icon)
+        val glowAnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.glow)
+        menuItemIcon?.startAnimation(glowAnimation)*/
         return binding.root
     }
 
@@ -202,10 +196,9 @@ class CalculateLoanFragment : Fragment() {
     private fun setTodayDate() {
         val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)
-        val month = calendar.get(Calendar.MONTH) // 0-indexed (January = 0)
+        val month = calendar.get(Calendar.MONTH)
         val day = calendar.get(Calendar.DAY_OF_MONTH)
 
-        // Format today's date as yyyy-MM-dd and set it to the EditText
         val formattedDate = commonFuncs.formatDate(year, month, day)
         editTextStartDate.setText(formattedDate)
     }

@@ -9,25 +9,25 @@ import java.text.SimpleDateFormat
 import java.util.*
 import com.np.testroom.utils.commonFuncs
 
-class LoanBalanceAdapter : RecyclerView.Adapter<LoanBalanceAdapter.LoanBalanceViewHolder>() {
+class BalanceAdapter : RecyclerView.Adapter<BalanceAdapter.BalanceViewHolder>() {
 
     private var balances: List<String> = listOf()
     private var dateString:String=""
 
     // View Holder to represent each row in the RecyclerView
-    inner class LoanBalanceViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class BalanceViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val balanceTextView: TextView = itemView.findViewById(R.id.textViewBalance)
         val dateTextView: TextView = itemView.findViewById(R.id.textViewDate)
     }
 
     // Create a new ViewHolder
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LoanBalanceViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BalanceViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_loan_balance, parent, false)
-        return LoanBalanceViewHolder(view)
+        return BalanceViewHolder(view)
     }
 
     // Bind the data to the ViewHolder
-    override fun onBindViewHolder(holder: LoanBalanceViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: BalanceViewHolder, position: Int) {
         if (position % 2 == 0) {
             holder.itemView.setBackgroundResource(R.drawable.odd_row_background); // Use odd row color
         } else {

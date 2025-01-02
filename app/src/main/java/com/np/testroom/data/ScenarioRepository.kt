@@ -13,11 +13,7 @@ import android.util.Log
 class ScenarioRepository(private val context: Context) {
 
     // Initialize Room database and DAO
-    private val db = Room.databaseBuilder(
-        context.applicationContext,
-        AppDatabase::class.java,
-        "app-database"
-    ).build()
+    private val db = AppDatabase.getDatabase(context)
 
     private val scenarioDao: ScenarioDao = db.scenarioDao()
     private val userDao:UserDao =db.userDao()
@@ -47,5 +43,12 @@ class ScenarioRepository(private val context: Context) {
 
     fun getScenariosByUserId(userId: Long): LiveData<List<Scenario>> {
         return scenarioDao.getScenariosByUserId(userId)
+    }
+
+    suspend fun deleteScenario(scenarioId: Long) {
+        scenarioDao.deleteScenarioById(scenarioId)
+    }
+    suspend fun updateScenario(scenario: Scenario) {
+        scenarioDao.update(scenario)
     }
 }

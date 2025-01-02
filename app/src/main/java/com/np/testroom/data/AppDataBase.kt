@@ -76,16 +76,16 @@ abstract class AppDatabase : RoomDatabase() {
                         FOREIGN KEY(`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE
                     )
                 """)
+                database.execSQL("ALTER TABLE scenarios ADD COLUMN start_date INTEGER DEFAULT ${System.currentTimeMillis()}") // Add start_date
+                database.execSQL("ALTER TABLE scenarios ADD COLUMN created_at INTEGER NOT NULL DEFAULT 0")
+                database.execSQL("ALTER TABLE scenarios ADD COLUMN updated_at INTEGER NOT NULL DEFAULT 0")
             }
         }
 
         val MIGRATION_4_5 = object : Migration(4, 5) {
             override fun migrate(database: SupportSQLiteDatabase) {
-                // Add new columns (term, start_date, created_at, updated_at)
-                database.execSQL("ALTER TABLE Scenario ADD COLUMN term INTEGER DEFAULT 0") // term as integer
-                database.execSQL("ALTER TABLE Scenario ADD COLUMN start_date INTEGER DEFAULT ${System.currentTimeMillis()}") // Add start_date
-                database.execSQL("ALTER TABLE Scenario ADD COLUMN created_at INTEGER DEFAULT ${System.currentTimeMillis()}") // Add created_at
-                database.execSQL("ALTER TABLE Scenario ADD COLUMN updated_at INTEGER DEFAULT ${System.currentTimeMillis()}") // Add updated_at
+
+
             }
         }
     }

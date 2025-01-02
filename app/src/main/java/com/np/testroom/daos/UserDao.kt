@@ -19,4 +19,7 @@ interface UserDao {
 
     @Query("SELECT EXISTS(SELECT 1 FROM users WHERE id = :userId LIMIT 1)")
     suspend fun userExists(userId: Long): Boolean
+
+    @Query("SELECT * FROM users WHERE username = :username LIMIT 1")
+    suspend fun getUserByUsername(username: String): User?
 }
