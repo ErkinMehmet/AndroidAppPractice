@@ -11,5 +11,5 @@
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="fab_email_description">Compose email</string>
-
+    <string name="default_web_client_id">329837515889-1b0bja87reqd4g65tii24jjk7l8mngqq.apps.googleusercontent.com</string>
 </resources>

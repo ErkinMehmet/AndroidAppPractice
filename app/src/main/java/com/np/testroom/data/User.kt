@@ -9,6 +9,7 @@ data class User(
     val name: String,
     val age: Int,
     val username: String,
+    val email: String="ferandosanchezmontevideo@gmail.com",
     @ColumnInfo(name = "password_hash") val passwordHash: String,
     @ColumnInfo(name = "description") val description: String? = null,
     @ColumnInfo(name = "profession") val profession: String? = null,

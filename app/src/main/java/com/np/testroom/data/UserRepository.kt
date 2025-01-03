@@ -17,4 +17,7 @@ class UserRepository(private val context: Context) {
     suspend fun getUserByUsername(username: String): User? {
         return db.userDao().getUserByUsername(username)
     }
+    suspend fun getUserByEmail(email: String): User? {
+        return db.userDao().getUserByEmail(email)
+    }
 }

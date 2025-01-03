@@ -10,7 +10,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.np.testroom.converters.Converters
 import androidx.room.TypeConverters
 
-@Database(entities = [User::class, Product::class, Scenario::class], version = 5, exportSchema = false)
+@Database(entities = [User::class, Product::class, Scenario::class], version = 6, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 
@@ -28,7 +28,7 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "app_database"
-                ).addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4,MIGRATION_4_5) // Add the migration here
+                ).addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4,MIGRATION_4_5,MIGRATION_5_6) // Add the migration here
                     .build()
                 INSTANCE = instance
                 instance
@@ -86,6 +86,11 @@ abstract class AppDatabase : RoomDatabase() {
             override fun migrate(database: SupportSQLiteDatabase) {
 
 
+            }
+        }
+        val MIGRATION_5_6 = object : Migration(5, 6) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("ALTER TABLE users ADD COLUMN email TEXT NOT NULL DEFAULT 'fernandosanchezmontevideo@gmail.com'")
             }
         }
     }

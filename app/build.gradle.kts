@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.ksp)
+    alias(libs.plugins.google.services)
 }
 
 android {
@@ -40,6 +41,10 @@ android {
 }
 
 dependencies {
+    implementation(libs.com.google.android.gms.play.services.identity)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.auth)
     implementation (libs.bcrypt)
     implementation(libs.com.facebook.android.sdk)  // Facebook SDK
     implementation(libs.com.google.android.gms.play.services.auth)

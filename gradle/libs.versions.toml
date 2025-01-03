@@ -18,6 +18,9 @@ googlePlayServicesAuth = "20.6.0"
 googlePlayServicesBase = "18.0.1"
 facebookSdk = "12.3.0"
 bcrypt = "0.4"
+googleService= "4.4.2"
+firebaseBom= "33.7.0"
+googlePlayServicesIdentity = "17.0.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -38,8 +41,14 @@ com-google-android-gms-play-services-auth = { group = "com.google.android.gms", 
 com-google-android-gms-play-services-base = { group = "com.google.android.gms", name = "play-services-base", version.ref = "googlePlayServicesBase" }
 com-facebook-android-sdk = { group = "com.facebook.android", name = "facebook-android-sdk", version.ref = "facebookSdk" }
 bcrypt = { group = "org.mindrot", name = "jbcrypt", version.ref = "bcrypt" }
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref="firebaseBom" }
+firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics" }
+firebase-auth = { group = "com.google.firebase", name = "firebase-auth" }
+com-google-android-gms-play-services-identity = { group = "com.google.android.gms", name = "play-services-identity", version.ref = "googlePlayServicesIdentity" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-ksp = { id = "com.google.devtools.ksp", version.ref="ksp" }
+google-services = { id = "com.google.gms.google-services", version.ref="googleService" }

@@ -24,6 +24,10 @@
             android:exported="true"
             android:theme="@style/Theme.TestRoom.NoActionBar"
             />
+        <activity android:name=".ForgotPasswordActivity"
+            android:exported="true"
+            android:theme="@style/Theme.TestRoom.NoActionBar"
+            />
 
 
         <activity android:name=".HomeActivity" android:launchMode="singleTop">
